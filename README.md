@@ -15,16 +15,26 @@ You just to need to:
 
 `err:=go_errors.NewBadRequestError("Error message Goes Here here")`
 
-//If you are using Gin
+```
+//If you are Using Gin
 
+```
 `c.JSON(err.Status(),err)`
 
-`/* Output
+```/*** Output
+
 {
    "message":"Error message Goes Here here",
    "status":400,
    "error":"Bad Request"
 }
 
-*/`
+w.Header().Set("Content-Type","application/json")
+w.WriteHeader(err.Status())
+json.NewEncoder(w).Encode(err)
+   
+
+```
+
+
 
