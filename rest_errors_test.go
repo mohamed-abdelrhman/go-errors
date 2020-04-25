@@ -2,6 +2,7 @@ package go_errors
 
 import (
 	"encoding/json"
+	"errors"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
@@ -56,4 +57,18 @@ func TestNewRestErrorFromBytes(t *testing.T) {
 	assert.EqualValues(t, 503, restErr.Status())
 	assert.EqualValues(t, "This Is Message", restErr.Message())
 	assert.EqualValues(t, "Service Unavailable", restErr.Error())
+}
+
+func TestNewUnprocessableEntity(t *testing.T) {
+	var errorMessages []interface{}
+	errorMessages = append(errorMessages, errors.New("ERROR ONE"))
+	errorMessages = append(errorMessages, errors.New("ANOTHER ONE"))
+	causes := []string{"ERROR ONE", "ANOTHER ONE"}
+	err := NewUnprocessableEntity("Validation error", causes)
+	assert.NotNil(t, err)
+	assert.EqualValues(t, http.StatusUnprocessableEntity, err.Status())
+	assert.EqualValues(t, "Validation error", err.Message())
+	assert.EqualValues(t, "Unprocessable Entity", err.Error())
+	assert.Contains(t, causes, "ERROR ONE")
+	assert.Contains(t, causes, "ANOTHER ONE")
 }

@@ -10,12 +10,14 @@ type RestErr interface {
 	Message() string
 	Status() int
 	Error() string
+	Causes() []string
 }
 
 type restErr struct {
-	ErrMessage string `json:"message"`
-	ErrStatus  int    `json:"status"`
-	ErrError   string `json:"error"`
+	ErrMessage string   `json:"message"`
+	ErrStatus  int      `json:"status"`
+	ErrError   string   `json:"error"`
+	ErrCauses  []string `json:"causes"`
 }
 
 //Assign error methods to the struct
@@ -29,6 +31,10 @@ func (e restErr) Message() string {
 
 func (e restErr) Status() int {
 	return e.ErrStatus
+}
+
+func (e restErr) Causes() []string {
+	return e.ErrCauses
 }
 
 //errors
@@ -79,5 +85,17 @@ func NewInternalServerError(message string) RestErr {
 		ErrStatus:  http.StatusInternalServerError,
 		ErrError:   "Internal Server Error",
 	}
+	return result
+}
+
+func NewUnprocessableEntity(message string, causes []string) restErr {
+
+	result := restErr{
+		ErrMessage: message,
+		ErrStatus:  http.StatusUnprocessableEntity,
+		ErrError:   "Unprocessable Entity",
+		ErrCauses:  causes,
+	}
+
 	return result
 }
