@@ -3,7 +3,6 @@ package go_errors
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 )
 
@@ -21,8 +20,7 @@ type restErr struct {
 
 //Assign error methods to the struct
 func (e restErr) Error() string {
-	return fmt.Sprintf("message: %s - status: %d - error: %s",
-		e.ErrMessage, e.ErrStatus, e.ErrError)
+	return e.ErrError
 }
 
 func (e restErr) Message() string {
@@ -35,7 +33,7 @@ func (e restErr) Status() int {
 
 //errors
 
-func NewRestError(message string, status int, err string, causes []interface{}) RestErr {
+func NewRestError(message string, status int, err string) RestErr {
 	return restErr{
 		ErrMessage: message,
 		ErrStatus:  status,
@@ -55,7 +53,7 @@ func NewBadRequestError(message string) RestErr {
 	return restErr{
 		ErrMessage: message,
 		ErrStatus:  http.StatusBadRequest,
-		ErrError:   "bad_request",
+		ErrError:   "Bad Request",
 	}
 }
 
@@ -63,7 +61,7 @@ func NewNotFoundError(message string) RestErr {
 	return restErr{
 		ErrMessage: message,
 		ErrStatus:  http.StatusNotFound,
-		ErrError:   "not_found",
+		ErrError:   "Not Found",
 	}
 }
 
@@ -71,15 +69,15 @@ func NewUnauthorizedError(message string) RestErr {
 	return restErr{
 		ErrMessage: message,
 		ErrStatus:  http.StatusUnauthorized,
-		ErrError:   "unauthorized",
+		ErrError:   "UnAuthorized",
 	}
 }
 
-func NewInternalServerError(message string, err error) RestErr {
+func NewInternalServerError(message string) RestErr {
 	result := restErr{
 		ErrMessage: message,
 		ErrStatus:  http.StatusInternalServerError,
-		ErrError:   "internal_server_error",
+		ErrError:   "Internal Server Error",
 	}
 	return result
 }
