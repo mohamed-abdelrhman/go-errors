@@ -41,13 +41,15 @@ OutPut
 
 ```
 
-$Bad Request
-```
-	err:=go_errors.NewBadRequestError("Error")
-```
+# Methods
 
-$Internal Server Error
 ```
+	err:=go_errors.NewRestError("Message",staus,"error")
+	err:=go_errors.NewRestErrorFromBytes(bytesError)
+	err:=go_errors.NewBadRequestError("Error")
+	err:=go_errors.NewUnauthorizedError("Error")
 	err:=go_errors.NewInternalServerError("Error")
 ```
+
+
 
