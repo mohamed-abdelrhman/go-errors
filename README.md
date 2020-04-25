@@ -30,7 +30,8 @@ w.WriteHeader(err.Status())
 json.NewEncoder(w).Encode(err)
 ```
 
-```/*** Output
+OutPut
+```
 
 {
    "message":"Error message Goes Here here",
