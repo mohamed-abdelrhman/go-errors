@@ -39,6 +39,15 @@ OutPut
    "error":"Bad Request"
 }
 
+```
 
+$Bad Request
+```
+	err:=go_errors.NewBadRequestError("Error")
+```
 
+$Internal Server Error
+```
+	err:=go_errors.NewInternalServerError("Error")
+```
 
