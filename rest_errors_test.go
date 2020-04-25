@@ -2,7 +2,6 @@ package go_errors
 
 import (
 	"encoding/json"
-	"errors"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
@@ -60,9 +59,6 @@ func TestNewRestErrorFromBytes(t *testing.T) {
 }
 
 func TestNewUnprocessableEntity(t *testing.T) {
-	var errorMessages []interface{}
-	errorMessages = append(errorMessages, errors.New("ERROR ONE"))
-	errorMessages = append(errorMessages, errors.New("ANOTHER ONE"))
 	causes := []string{"ERROR ONE", "ANOTHER ONE"}
 	err := NewUnprocessableEntity("Validation error", causes)
 	assert.NotNil(t, err)
