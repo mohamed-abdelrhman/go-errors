@@ -16,10 +16,14 @@ You just to need to:
 `err:=go_errors.NewBadRequestError("Error message Goes Here here")`
 
 
-Format Response
+Format Response:
+
 For Gin Framwork
-`c.JSON(err.Status(),err)`
+```
+c.JSON(err.Status(),err)
+```
 Another Framworks
+
 ```
 w.Header().Set("Content-Type","application/json")
 w.WriteHeader(err.Status())
